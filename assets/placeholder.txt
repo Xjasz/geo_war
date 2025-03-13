@@ -1,0 +1,33 @@
+This directory contains game sprites and assets.
+
+The game will use colored rectangles as placeholder sprites if the actual image files are not found.
+
+To add your own sprites, place PNG files in this directory with the following names:
+- knight.png
+- archer.png
+- mage.png
+- zombie.png
+- skeleton.png
+- vampire.png
+- bat.png
+- ghost.png
+- health_potion.png
+- magnet.png
+- sword.png
+- bow.png
+- wand.png
+- axe.png
+- fireball.png
+- arrow.png
+- boots.png
+- shield.png
+- amulet.png
+- ring.png
+- crown.png
+
+# Boss Sprites
+- necromancer.png
+- death_knight.png
+- vampire_lord.png
+- lich.png
+- demon.png 

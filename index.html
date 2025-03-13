@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Geo War</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div id="start-screen" class="screen">
+            <h1>Geo War</h1>
+            <div class="character-selection">
+                <h2>Select Your Character</h2>
+                <div class="characters">
+                    <div class="character" data-character="knight">
+                        <div class="character-icon knight"></div>
+                        <h3>Knight</h3>
+                        <p>Melee specialist with a sword</p>
+                    </div>
+                    <div class="character" data-character="archer">
+                        <div class="character-icon archer"></div>
+                        <h3>Archer</h3>
+                        <p>Ranged attacks with a bow</p>
+                    </div>
+                    <div class="character" data-character="mage">
+                        <div class="character-icon mage"></div>
+                        <h3>Mage</h3>
+                        <p>Magic attacks with a wand</p>
+                    </div>
+                </div>
+                <button id="start-game">Start Game</button>
+                <div class="debug-controls">
+                    <label>
+                        <input type="checkbox" id="debug-toggle"> Debug Mode
+                    </label>
+                    <p class="debug-hint">Press F9 to toggle debug mode during gameplay</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="game-screen" class="screen hidden">
+            <canvas id="gameCanvas"></canvas>
+            <div class="hud">
+                <div class="health-bar">
+                    <div class="health-fill"></div>
+                </div>
+                <div class="level">Level: <span id="level">1</span></div>
+                <div class="xp-bar">
+                    <div class="xp-fill"></div>
+                </div>
+                <div class="time">Time: <span id="time">00:00</span></div>
+                <div class="items" id="items-container"></div>
+            </div>
+            <div id="touch-controls" class="touch-controls">
+                <div id="joystick-area" class="joystick-area">
+                    <div id="joystick" class="joystick"></div>
+                </div>
+                <div id="pause-button" class="pause-button">II</div>
+            </div>
+        </div>
+        
+        <div id="game-over-screen" class="screen hidden">
+            <h1>Game Over</h1>
+            <div class="stats">
+                <p>Time survived: <span id="final-time">00:00</span></p>
+                <p>Level reached: <span id="final-level">1</span></p>
+                <p>Enemies defeated: <span id="enemies-defeated">0</span></p>
+            </div>
+            <button id="play-again">Play Again</button>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/sprites.js"></script>
+    <script src="js/items.js"></script>
+    <script src="js/weapons.js"></script>
+    <script src="js/characters.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/bosses.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
