@@ -52,6 +52,7 @@ function createPlayer(type) {
         // Create player object with explicitly reset multipliers
         const player = {
             type,
+            sprite: type,
             x: gameWidth / 2,
             y: gameHeight / 2,
             width: SPRITE_SIZE,

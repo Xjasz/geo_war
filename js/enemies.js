@@ -626,7 +626,7 @@ function createEnemy(type, x, y, level = 1) {
                         this.lastAttackTime = now;
                         
                         // Visual effect for attack
-                        addAnimatedEffect('slash', 
+                        addAnimatedEffect('hit', 
                             player.x, 
                             player.y, 
                             300
@@ -768,7 +768,6 @@ function createEnemy(type, x, y, level = 1) {
                 // Get sprite properties
                 const sprite = sprites[this.sprite];
                 if (!sprite) {
-                    console.warn(`Sprite not found for enemy type: ${this.type}, using placeholder`);
                     // Draw a placeholder circle
                     ctx.save();
                     // Apply stealth transparency if assassin

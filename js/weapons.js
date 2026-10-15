@@ -28,7 +28,6 @@ class Projectile {
         this.piercing = false; // Set to true for piercing projectiles
         this.isPlayer = owner && owner.isPlayer === true; // Set isPlayer flag based on owner
         
-        console.log(`Projectile created: damage=${damage}, speed=${speed}, range=${range}`);
     }
     
     update(deltaTime, entities) {
@@ -83,7 +82,6 @@ class Projectile {
                 
                 if (checkCollision(hitbox, entityHitbox)) {
                     const entityType = entity.isBoss ? 'boss' : 'enemy';
-                    console.log(`Projectile hit ${entityType} ${entity.id} (${entity.name}) with damage: ${this.damage}`);
                     
                     // Apply damage
                     entity.takeDamage(this.damage);
@@ -300,7 +298,7 @@ class LaserBeam {
         this.width = 10;
         this.height = range;
         this.angle = 0;
-        this.active = false;
+        this.active = true;
         this.target = null;
         this.lastAttackTime = 0;
         this.hitEnemies = new Set();
@@ -319,19 +317,18 @@ class LaserBeam {
         if (!this.active) return;
         
         // Find closest entity if no target or target is dead
-        if (!this.target || !this.target.active) {
+        if (!this.target || !this.target.active || distance(this.owner.x, this.owner.y, this.target.x, this.target.y) > this.range) {
             const activeEntities = entities.filter(e => e.active);
             if (activeEntities.length === 0) {
-                this.active = false;
+                this.target = null;
                 return;
             }
             
             const closest = findClosestEntity(this.owner.x, this.owner.y, activeEntities);
             if (closest && closest.distance <= this.range) {
                 this.target = closest.entity;
-                this.active = true;
             } else {
-                this.active = false;
+                this.target = null;
                 return;
             }
         }
@@ -364,7 +361,6 @@ class LaserBeam {
             
             if (angleDiff < tolerance || angleDiff > Math.PI * 2 - tolerance) {
                 const entityType = entity.isBoss ? 'boss' : 'enemy';
-                console.log(`LaserBeam hit ${entityType} ${entity.id} (${entity.name}) with damage: ${this.damage}`);
                 
                 // Apply damage
                 entity.takeDamage(this.damage);

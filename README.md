@@ -26,7 +26,6 @@ Each character has unique stats and starts with a different weapon:
 
 ### Progression System
 - Level up by collecting experience gems from defeated enemies
-- Choose new weapons and items when leveling up
 - Automatic stat improvements when leveling up
 - Stat caps prevent overpowered builds (max health: 1000, speed: 5, damage: 10x, etc.)
 
@@ -64,9 +63,15 @@ The game features a challenging boss system:
 ### Enemy Types
 - **Zombie**: Slow movement, high health
 - **Skeleton**: Medium movement, medium health
-- **Ghost**: Fast movement, phases through obstacles
+- **Ghost**: Fast movement
 - **Bat**: Very fast movement, low health
-- **Slime**: Splits into smaller slimes when defeated
+- **Vampire**
+- **Archer**: Ranged, shoots arrows
+- **Mage**: Stationary, shoots fireballs
+- **Multiplier**: Splits into more copies if not killed quickly
+- **Assassin**: Stealths and unstealths when attacking
+- **Berserker**: Gets stronger as its health drops
+- **Bomber**: Rushes the player and explodes
 
 ## Technical Details
 
@@ -91,10 +96,13 @@ The game is built using vanilla JavaScript and HTML5 Canvas, with no external de
 
 ## Customization
 
-The game currently uses simple colored shapes as placeholder sprites. To add your own sprites:
+The game draws simple coloured circles as placeholder sprites. They are generated on an offscreen canvas by `createSprite` in `js/sprites.js`; there is no image loading yet, so replace those definitions to change the look.
 
-1. Add image files to the `assets` folder
-2. Update the sprite definitions in `js/sprites.js`
+### Controls
+- WASD / arrow keys: move (touch joystick on phones)
+- Space: pause / resume
+- F9: toggle debug mode
+- R (debug mode only): reset player stats
 
 ## Getting Started (Development)
 

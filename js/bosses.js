@@ -773,6 +773,7 @@ function createBoss(type, x, y, level = 1) {
                             // Create ice particle effect when hit
                             addAnimatedEffect('explosion', this.x, this.y, 300);
                         };
+                        enemies.push(skeleton);
                     }
                 }, 1000);
             }
@@ -813,6 +814,7 @@ function createBoss(type, x, y, level = 1) {
                 
                 // Create multiple fireballs in a cone
                 const fireballsPerBurst = 3;
+                const boss = this;
                 for (let i = 0; i < fireballsPerBurst; i++) {
                     // Vary the angle slightly for each fireball in the burst
                     const angleVariation = (Math.random() - 0.5) * Math.PI / 12; // ±15 degrees
@@ -843,13 +845,14 @@ function createBoss(type, x, y, level = 1) {
                             const playerDist = window.distance(this.x, this.y, player.x, player.y);
                             if (playerDist < 40) {
                                 // Damage player
-                                player.takeDamage(this.damage * 0.2);
+                                player.takeDamage(boss.damage * 0.2);
                                 
                                 // Apply burning effect - damage over time
                                 if (!player.burningEffect) {
                                     player.burningEffect = {
-                                        damage: this.damage * 0.05,
+                                        damage: boss.damage * 0.05,
                                         duration: 3000,
+                                        interval: 500,
                                         lastDamageTime: Date.now(),
                                         startTime: Date.now()
                                     };
@@ -866,7 +869,7 @@ function createBoss(type, x, y, level = 1) {
                             }
                             
                             return originalUpdate.call(this);
-                        }.bind(this);
+                        };
                     }
                 }
                 
@@ -1073,7 +1076,6 @@ function createBoss(type, x, y, level = 1) {
             // Bosses take reduced damage
             const actualDamage = damage * 0.7;
             
-            console.log(`Boss ${this.id} (${this.name}) taking ${actualDamage} damage. Health before: ${this.health}`);
             this.health -= actualDamage;
             console.log(`Health after: ${this.health}`);
             
