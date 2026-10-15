@@ -768,7 +768,6 @@ function createEnemy(type, x, y, level = 1) {
                 // Get sprite properties
                 const sprite = sprites[this.sprite];
                 if (!sprite) {
-                    console.warn(`Sprite not found for enemy type: ${this.type}, using placeholder`);
                     // Draw a placeholder circle
                     ctx.save();
                     // Apply stealth transparency if assassin

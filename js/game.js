@@ -134,7 +134,6 @@ function updateWeapons(deltaTime) {
         }
         
         if (!weapon.active) {
-            console.log(`Removing inactive weapon at index ${i}`);
             player.weapons.splice(i, 1);
             continue;
         }
@@ -152,7 +151,6 @@ function updateWeapons(deltaTime) {
         if (weapon.attack) {
             const projectile = weapon.attack();
             if (projectile) {
-                console.log(`Created projectile with damage: ${projectile.damage}`);
                 projectiles.push(projectile);
             }
         }
@@ -240,12 +238,10 @@ function updateEnemies(deltaTime) {
         
         // Skip if enemy is already inactive
         if (!enemy.active) {
-            console.log(`Removing dead enemy ${enemy.id}`);
             
             // Drop experience gem with reduced probability (50% chance)
             const expValue = enemy.experienceValue || 0;
             if (expValue > 0 && Math.random() < 0.5) {
-                console.log(`Enemy ${enemy.id} drops ${expValue} experience`);
                 const expGem = createExperienceGem(enemy.x, enemy.y, expValue);
                 if (expGem) {
                     pickups.push(expGem);
@@ -253,7 +249,6 @@ function updateEnemies(deltaTime) {
             }
             
             enemies.splice(i, 1);
-            enemiesDefeated++;
             
             // Reduced chance to drop an item (5% instead of 10%)
             if (Math.random() < 0.05) { // 5% chance
@@ -1073,6 +1068,7 @@ function spawnFinalBossWave() {
     
     // Spawn the bosses after a delay (to give player time to prepare)
     setTimeout(() => {
+        if (!gameRunning || !finalBossesSpawned) return;
         // Clear any remaining enemies to give the player a clean slate
         enemies = [];
         
@@ -1325,6 +1321,13 @@ function initGame(playerType) {
     itemChoices = [];
     bossAnnouncement = null;
     gameCompletedMessage = null;
+    lastBossSpawnTime = 0;
+    defeatedBosses = [];
+    finalBossesSpawned = false;
+    gameCompleted = false;
+    enemySpawnTimer = 0;
+    window.bossPreAnnounced = false;
+    window.finalBossPreAnnounced = false;
     
     // Initialize player
     if (player && typeof player.init === 'function') {
@@ -1346,10 +1349,6 @@ function initGame(playerType) {
     window.effects = effects;
     window.toxicPuddles = toxicPuddles;
     window.gameTime = gameTime;
-    
-    // Start game loop
-    lastFrameTime = Date.now();
-    requestAnimationFrame(gameLoop);
 }
 
 // Function to add a toxic puddle

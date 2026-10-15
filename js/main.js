@@ -556,7 +556,8 @@ function startGame() {
 // Game loop
 function gameLoop(timestamp) {
     // Calculate delta time
-    const deltaTime = timestamp - lastFrameTime;
+    if (!gameRunning) return;
+    const deltaTime = Math.min(timestamp - lastFrameTime, 100);
     lastFrameTime = timestamp;
     
     // Handle resume buffer countdown if active
