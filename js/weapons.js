@@ -317,7 +317,7 @@ class LaserBeam {
         if (!this.active) return;
         
         // Find closest entity if no target or target is dead
-        if (!this.target || !this.target.active) {
+        if (!this.target || !this.target.active || distance(this.owner.x, this.owner.y, this.target.x, this.target.y) > this.range) {
             const activeEntities = entities.filter(e => e.active);
             if (activeEntities.length === 0) {
                 this.target = null;

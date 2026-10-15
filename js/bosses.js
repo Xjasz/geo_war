@@ -773,6 +773,7 @@ function createBoss(type, x, y, level = 1) {
                             // Create ice particle effect when hit
                             addAnimatedEffect('explosion', this.x, this.y, 300);
                         };
+                        enemies.push(skeleton);
                     }
                 }, 1000);
             }

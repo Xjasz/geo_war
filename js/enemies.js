@@ -626,7 +626,7 @@ function createEnemy(type, x, y, level = 1) {
                         this.lastAttackTime = now;
                         
                         // Visual effect for attack
-                        addAnimatedEffect('slash', 
+                        addAnimatedEffect('hit', 
                             player.x, 
                             player.y, 
                             300

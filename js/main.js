@@ -541,6 +541,8 @@ function startGame() {
     }
     
     // Start game loop
+    resumeBufferActive = false;
+    document.querySelectorAll('.pause-indicator').forEach(el => el.remove());
     lastFrameTime = performance.now();
     requestAnimationFrame(gameLoop);
     
@@ -557,7 +559,7 @@ function startGame() {
 function gameLoop(timestamp) {
     // Calculate delta time
     if (!gameRunning) return;
-    const deltaTime = Math.min(timestamp - lastFrameTime, 100);
+    const deltaTime = Math.min(Math.max(timestamp - lastFrameTime, 0), 100);
     lastFrameTime = timestamp;
     
     // Handle resume buffer countdown if active

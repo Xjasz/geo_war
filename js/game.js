@@ -202,6 +202,7 @@ function updateProjectiles(deltaTime) {
                 
                 // Apply damage to player
                 player.takeDamage(projectile.damage);
+                if (projectile.onHit) projectile.onHit(player);
                 
                 // Apply knockback to player
                 if (projectile.knockback > 0) {
@@ -1019,18 +1020,17 @@ function handleBossSpawning(currentGameTime) {
     const secondsIntoInterval = currentGameTime % BOSS_SPAWN_INTERVAL;
     
     // Check if we should pre-announce a boss (5 seconds before spawn)
-    const shouldPreAnnounce = currentInterval > 0 && 
-                             currentInterval > lastBossSpawnTime &&
+    const shouldPreAnnounce = currentInterval >= lastBossSpawnTime &&
                              secondsIntoInterval >= (BOSS_SPAWN_INTERVAL - WARNING_TIME) && 
                              !window.bossPreAnnounced &&
-                             currentGameTime < 180; // Stop regular spawns before final wave
+                             currentGameTime < 175; // Stop regular spawns before final wave
     
     if (shouldPreAnnounce) {
         console.log(`Pre-announcing boss at ${currentGameTime.toFixed(1)} seconds`);
         window.bossPreAnnounced = true;
         
         // Get the boss type that will spawn
-        const bossIndex = (currentInterval - 1) % Object.keys(BOSS_TYPES).length;
+        const bossIndex = (currentInterval + 1) % Object.keys(BOSS_TYPES).length;
         const bossType = Object.values(BOSS_TYPES)[bossIndex];
         const bossName = BOSSES[bossType].name;
         
@@ -1060,15 +1060,12 @@ function handleBossSpawning(currentGameTime) {
 
 // Spawn the final boss wave with all boss types
 function spawnFinalBossWave() {
-    // Set flag for final bosses
-    finalBossesSpawned = true;
-    
     // Pre-announce the wave
     showBossAnnouncement("ALL BOSSES", true);
     
     // Spawn the bosses after a delay (to give player time to prepare)
     setTimeout(() => {
-        if (!gameRunning || !finalBossesSpawned) return;
+        if (!gameRunning || !window.finalBossPreAnnounced) return;
         // Clear any remaining enemies to give the player a clean slate
         enemies = [];
         
@@ -1140,6 +1137,7 @@ function spawnFinalBossWave() {
             index++;
         }
         
+        finalBossesSpawned = true;
         // Add a special message
         console.log("FINAL CHALLENGE: All bosses have DOUBLED stats! Good luck!");
     }, 5000); // 5-second warning instead of 10
@@ -1308,6 +1306,7 @@ function initGame(playerType) {
     // Reset game state
     player = createPlayer(playerType);
     enemies = [];
+    bosses.forEach(b => b.active = false);
     bosses = [];
     projectiles = [];
     pickups = [];
